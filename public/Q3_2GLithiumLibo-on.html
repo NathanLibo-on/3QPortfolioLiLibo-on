@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Club / Organization Application Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+
+        form {
+            width: 600px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        fieldset {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border: 2px solid #007bff;
+            outline: none;
+            background-color: #eef6ff;
+        }
+
+        .invalid {
+            border: 2px solid red;
+            background-color: #ffecec;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .buttons input {
+            width: 120px;
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+
+    <script>
+        function confirmSubmit() {
+            return confirm("Are you sure you want to submit this application?");
+        }
+
+        function confirmReset() {
+            return confirm("Are you sure you want to reset the form?");
+        }
+
+        function validateBlur(element) {
+            if (element.value.trim() === "") {
+                element.classList.add("invalid");
+            } else {
+                element.classList.remove("invalid");
+            }
+        }
+    </script>
+</head>
+<body>
+
+<form method="post" action="submit" onsubmit="return confirmSubmit()" onreset="return confirmReset()">
+
+ 
+    <fieldset>
+        <legend>Personal Information</legend>
+
+        <label>
+            Student ID:
+            <input type="number" name="student_id" required onblur="validateBlur(this)">
+        </label>
+
+        <label>
+            Full Name:
+            <input type="text" name="full_name" required onblur="validateBlur(this)">
+        </label>
+
+        <label>
+            Birthday:
+            <input type="date" name="birthday" required onblur="validateBlur(this)">
+        </label>
+
+        <label>
+            Email Address:
+            <input type="email" name="email" required onblur="validateBlur(this)">
+        </label>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Application Details</legend>
+
+        <label>
+            Mobile Phone:
+            <input type="text" name="mobile" required onblur="validateBlur(this)">
+        </label>
+
+        <label>
+            Grade Level:
+            <select name="grade_level" required onblur="validateBlur(this)">
+                <option value="">-- Select Grade Level --</option>
+                <option value="g7">Grade 7</option>
+                <option value="g8">Grade 8</option>
+                <option value="g9">Grade 9</option>
+                <option value="g10">Grade 10</option>
+                <option value="g11">Grade 11</option>
+                <option value="g12">Grade 12</option>
+            </select>
+        </label>
+
+        <label>
+            Intern / Extern:
+            <input type="radio" name="status" value="internship" required> Intern
+            <input type="radio" name="status" value="externship" required> Extern
+        </label>
+
+        <label>
+            Preferred Organization / Club:
+            <select name="club" required onblur="validateBlur(this)">
+                <option value="">-- Select Club --</option>
+                <option value="chessClub">Animo Chess Club</option>
+                <option value="himigAgham">Himig Agham</option>
+                <option value="volant">Volant</option>
+                <option value="alianti">Alianti</option>
+                <option value="astronomy">Astrosoc</option>
+            </select>
+        </label>
+
+        <label>
+            Why do you want to join?
+            <textarea name="reason" rows="4" required onblur="validateBlur(this)"></textarea>
+        </label>
+    </fieldset>
+
+    <div class="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </div>
+
+</form>
+
+</body>
+</html>
