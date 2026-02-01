@@ -70,21 +70,22 @@ function filterSignUps() {
 
     output.innerHTML = "";
     total.innerHTML = "";
-
+    //empty space to be filled by results from function
     if (signUps.length === 0) {
         output.innerHTML = "<p class='message'>No sign-ups found.</p>";
         return;
-    }
+    } //checks if there is something in localStorage
 
     let filtered = club === "ALL"
         ? signUps
         : signUps.filter(s => s.club === club);
+        //fileters the students club
 
     if (filtered.length === 0) {
         output.innerHTML = "<p class='message'>No sign-ups for this club.</p>";
         total.textContent = "Total Signup : 0";
         return;
-    }
+    } //checks if the filtered club has any sign-ups
 
     let html = `
         <table>
@@ -100,7 +101,7 @@ function filterSignUps() {
                 </tr>
             </thead>
             <tbody>
-    `;
+    `; //the table heads
 
     filtered.forEach(s => {
         html += `
@@ -114,7 +115,7 @@ function filterSignUps() {
                 <td>${formatStatus(s.status)}</td>
             </tr>
         `;
-    });
+    }); //adds the rows containing data from localStorage
 
     html += `
             </tbody>
@@ -134,19 +135,21 @@ function formatClub(value) {
         astronomy: "Astrosoc"
     };
     return map[value] || value;
+    //ensures correct format of club
 }
 
 function formatGrade(value) {
     return value.replace("g", "Grade ");
-}
+} //ensures correct format of grade level
 
 function formatStatus(value) {
     return value === "internship" ? "Intern" : "Extern";
-}
+} // ensures correct format of status
 
 window.addEventListener('DOMContentLoaded', () => {
             document.getElementById("clubFilter").value = "ALL";
-            filterSignUps();
+
+            filterSignUps(); //displays the table upon opening page
         });
     </script>
 

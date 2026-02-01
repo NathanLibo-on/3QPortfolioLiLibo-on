@@ -82,7 +82,7 @@
         }
 
         function toLocalStorage() {
-        
+            
             if (!confirmSubmit("Do you want to submit this application?")) {
                 return false;
             }
@@ -95,11 +95,12 @@
                 email: document.getElementById('email').value,
                 mobile: document.getElementById('mobile').value,
                 status: document.querySelector('input[name="status"]:checked').value,
-            };
+            }; //converts the data into values
 
             let signUps = JSON.parse(localStorage.getItem('signUps')) || [];
             signUps.push(signUpData);
             localStorage.setItem('signUps', JSON.stringify(signUps));
+            //turns object into string, sends to localStorage
 
             alert("Application data saved locally.");
             return true;
