@@ -67,6 +67,13 @@
             text-align: center;
             margin-top: 20px;
         }
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
     </style>
 
     <script>
@@ -78,6 +85,29 @@
             return confirm("Are you sure you want to reset the form?");
         }
 
+        function toLocalStorage() {
+        
+            if (!confirmSubmit("Do you want to submit this application?")) {
+                return false;
+            }
+
+            let signUpData = {
+                club: document.getElementById('club').value,
+                student_id: document.getElementById('student_id').value,
+                full_name: document.getElementById('full_name').value,
+                grade_level: document.getElementById('grade_level').value,
+                email: document.getElementById('email').value,
+                mobile: document.getElementById('mobile').value,
+                status: document.querySelector('input[name="status"]:checked').value,
+            };
+
+            let signUps = JSON.parse(localStorage.getItem('signUps')) || [];
+            signUps.push(signUpData);
+            localStorage.setItem('signUps', JSON.stringify(signUps));
+
+            alert("Application data saved locally.");
+            return true;
+        }
         function validateBlur(element) {
             if (element.value.trim() === "") {
                 element.classList.add("invalid");
@@ -89,7 +119,7 @@
 </head>
 <body>
 
-<form method="post" action="submit" onsubmit="return confirmSubmit()" onreset="return confirmReset()">
+<form id="myForm" onsubmit="return toLocalStorage()" onreset="return confirmReset()">
 
  
     <fieldset>
@@ -97,22 +127,22 @@
 
         <label>
             Student ID:
-            <input type="number" name="student_id" required onblur="validateBlur(this)">
+            <input type="number" name="student_id" id="student_id" required onblur="validateBlur(this)">
         </label>
 
         <label>
             Full Name:
-            <input type="text" name="full_name" required onblur="validateBlur(this)">
+            <input type="text" name="full_name" id="full_name" required onblur="validateBlur(this)">
         </label>
 
         <label>
             Birthday:
-            <input type="date" name="birthday" required onblur="validateBlur(this)">
+            <input type="date" name="birthday" id="birthday" required onblur="validateBlur(this)">
         </label>
 
         <label>
             Email Address:
-            <input type="email" name="email" required onblur="validateBlur(this)">
+            <input type="email" name="email" id="email" required onblur="validateBlur(this)">
         </label>
     </fieldset>
 
@@ -122,12 +152,12 @@
 
         <label>
             Mobile Phone:
-            <input type="text" name="mobile" required onblur="validateBlur(this)">
+            <input type="text" name="mobile" id="mobile" required onblur="validateBlur(this)">
         </label>
 
         <label>
             Grade Level:
-            <select name="grade_level" required onblur="validateBlur(this)">
+            <select name="grade_level" id="grade_level" required onblur="validateBlur(this)">
                 <option value="">-- Select Grade Level --</option>
                 <option value="g7">Grade 7</option>
                 <option value="g8">Grade 8</option>
@@ -138,15 +168,14 @@
             </select>
         </label>
 
-        <label>
-            Intern / Extern:
-            <input type="radio" name="status" value="internship" required> Intern
-            <input type="radio" name="status" value="externship" required> Extern
-        </label>
+            <input type="radio" name="status" id="status" value="internship" required> 
+            <label>Intern</label></br>
+            <input type="radio" name="status" id="status" value="externship" required>
+            <label>Extern</label></br>
 
         <label>
             Preferred Organization / Club:
-            <select name="club" required onblur="validateBlur(this)">
+            <select name="club" id="club" required onblur="validateBlur(this)">
                 <option value="">-- Select Club --</option>
                 <option value="chessClub">Animo Chess Club</option>
                 <option value="himigAgham">Himig Agham</option>
@@ -166,6 +195,8 @@
         <input type="submit" value="Submit">
         <input type="reset" value="Reset">
     </div>
+    
+    <button type="button" onclick="window.location.href='viewSignUps.html'">View Sign-Ups</button>
 
 </form>
 <nav>

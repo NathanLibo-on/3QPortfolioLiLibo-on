@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Sign-Ups</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        select {
+            padding: 6px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .total {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+
+<script>
+const signUps = JSON.parse(localStorage.getItem("signUps")) || [];
+
+function filterSignUps() {
+    const club = document.getElementById("clubFilter").value;
+    const output = document.getElementById("output");
+    const total = document.getElementById("total");
+
+    output.innerHTML = "";
+    total.innerHTML = "";
+
+    if (signUps.length === 0) {
+        output.innerHTML = "<p class='message'>No sign-ups found.</p>";
+        return;
+    }
+
+    let filtered = club === "ALL"
+        ? signUps
+        : signUps.filter(s => s.club === club);
+
+    if (filtered.length === 0) {
+        output.innerHTML = "<p class='message'>No sign-ups for this club.</p>";
+        total.textContent = "Total Signup : 0";
+        return;
+    }
+
+    let html = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Club</th>
+                    <th>ID</th>
+                    <th>Fullname</th>
+                    <th>Grade</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Intern|Extern</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    filtered.forEach(s => {
+        html += `
+            <tr>
+                <td>${formatClub(s.club)}</td>
+                <td>${s.student_id}</td>
+                <td>${s.full_name}</td>
+                <td>${formatGrade(s.grade_level)}</td>
+                <td>${s.email}</td>
+                <td>${s.mobile}</td>
+                <td>${formatStatus(s.status)}</td>
+            </tr>
+        `;
+    });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    output.innerHTML = html;
+    total.textContent = "Total Signup : " + filtered.length;
+}
+
+function formatClub(value) {
+    const map = {
+        chessClub: "Animo Chess Club",
+        himigAgham: "Himig Agham",
+        volant: "Volant",
+        alianti: "Alianti",
+        astronomy: "Astrosoc"
+    };
+    return map[value] || value;
+}
+
+function formatGrade(value) {
+    return value.replace("g", "Grade ");
+}
+
+function formatStatus(value) {
+    return value === "internship" ? "Intern" : "Extern";
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("clubFilter").value = "ALL";
+            filterSignUps();
+        });
+    </script>
+
+</head>
+<body>
+
+<h2>Student Club Sign-Ups</h2>
+
+<div class="filter">
+    <label>
+        Select Your Club
+        <select id="clubFilter" onchange="filterSignUps()">
+            <option value="ALL" selected >All clubs</option>
+            <option value="chessClub">Animo Chess Club</option>
+            <option value="himigAgham">Himig Agham</option>
+            <option value="volant">Volant</option>
+            <option value="alianti">Alianti</option>
+            <option value="astronomy">Astrosoc</option>
+        </select>
+    </label>
+</div>
+
+<div class="total" id="total"></div>
+
+<div id="output"></div>
+
+<button type="button" onclick="window.location.href='Q3_2GLithiumLibo-on.html'">Back to Application Form</button>
+
+</body>
+</html>
