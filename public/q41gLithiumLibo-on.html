@@ -64,11 +64,11 @@
             cursor:pointer;
             color:#ccc;
         }
-
+        /* When star is selected it becomes gold */
         .star.active{
             color:gold;
         }
-
+        /* Style for each movie entry in the movie list */
         .movie{
             background:#e8e8e8;
             padding:12px;
@@ -152,10 +152,12 @@ document.addEventListener("DOMContentLoaded", function(){
 var rating = 0;
 var stars = document.querySelectorAll(".star");
 
+// When a star is clicked, the function setRating will run
 for (var i = 0; i < stars.length; i++) {
     stars[i].addEventListener("click", setRating);
 }
 
+// This function runs whenever a star is clicked
 function setRating(event){
     var clickedStar = event.target;
     for (var i = 0; i < stars.length; i++) {
@@ -166,7 +168,7 @@ function setRating(event){
     updateStars();
 }
 
-
+// This function updates the star colors based on the rating
 function updateStars(){
     for (var i = 0; i < stars.length; i++) {
         if (i < rating) {
@@ -192,7 +194,7 @@ function getMovies(){
 function saveMovies(movies){
     localStorage.setItem("movies", JSON.stringify(movies));
 }
-
+/* Display all stored movies on the webpage */
 function displayMovies(){
 
     const movieList = document.getElementById("movieList");
@@ -214,7 +216,7 @@ function displayMovies(){
 
     });
 }
-
+/* Event listener for when the form is submitted */
 document.getElementById("myForm").addEventListener("submit", function(e){
 
     e.preventDefault();
