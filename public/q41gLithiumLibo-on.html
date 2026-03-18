@@ -242,7 +242,7 @@ document.getElementById("myForm").addEventListener("submit", function(e){
 
     const movies = getMovies();
 
-    // NEW: check if movie already exists
+    //check if movie already exists
     var existingMovie = null;
 
     for (var i = 0; i < movies.length; i++) {
@@ -255,7 +255,7 @@ document.getElementById("myForm").addEventListener("submit", function(e){
     }
 
     if(existingMovie){
-        // NEW: update rating by averaging
+        //update rating by averaging
         existingMovie.total += rating;
         existingMovie.count += 1;
         existingMovie.rating = Math.ceil(existingMovie.total / existingMovie.count);
