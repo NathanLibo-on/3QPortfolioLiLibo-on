@@ -195,7 +195,7 @@ function saveMovies(movies){
     localStorage.setItem("movies", JSON.stringify(movies));
 }
 
-/* NEW: delete function */
+/*delete function */
 function deleteMovie(index){
     var confirmDelete = confirm("Are you sure you want to delete this movie?");
     if(confirmDelete){
@@ -285,7 +285,7 @@ document.getElementById("myForm").addEventListener("submit", function(e){
 
 displayMovies();
 
-/* IMPORTANT: make delete function accessible to HTML */
+/*make delete function accessible to HTML */
 window.deleteMovie = deleteMovie;
 
 });
