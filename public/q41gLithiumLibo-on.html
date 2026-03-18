@@ -194,6 +194,18 @@ function getMovies(){
 function saveMovies(movies){
     localStorage.setItem("movies", JSON.stringify(movies));
 }
+
+/* NEW: delete function */
+function deleteMovie(index){
+    var confirmDelete = confirm("Are you sure you want to delete this movie?");
+    if(confirmDelete){
+        var movies = getMovies();
+        movies.splice(index, 1);
+        saveMovies(movies);
+        displayMovies();
+    }
+}
+
 /* Display all stored movies on the webpage */
 function displayMovies(){
 
@@ -202,7 +214,7 @@ function displayMovies(){
 
     const movies = getMovies();
 
-    movies.forEach(movie => {
+    movies.forEach((movie, index) => {
 
         let starsDisplay = "★".repeat(movie.rating);
 
@@ -210,26 +222,56 @@ function displayMovies(){
         div.classList.add("movie");
 
         div.innerHTML =
-        `${movie.title} (${movie.year}) - ${movie.genre}, Rating: <span class="rating-stars">${starsDisplay}</span>`;
+        `${movie.title} (${movie.year}) - ${movie.genre}, Rating: 
+        <span class="rating-stars">${starsDisplay}</span>
+        <button onclick="deleteMovie(${index})" style="margin-left:10px; width: 100px; background:gray;">Delete</button>`;
 
         movieList.appendChild(div);
 
     });
 }
+
 /* Event listener for when the form is submitted */
 document.getElementById("myForm").addEventListener("submit", function(e){
 
     e.preventDefault();
 
-    const movie = {
-        title: document.getElementById("title").value,
-        year: document.getElementById("year").value,
-        genre: document.getElementById("movie_genre").value,
-        rating: rating
-    };
+    const title = document.getElementById("title").value;
+    const year = document.getElementById("year").value;
+    const genre = document.getElementById("movie_genre").value;
 
     const movies = getMovies();
-    movies.push(movie);
+
+    // NEW: check if movie already exists
+    var existingMovie = null;
+
+    for (var i = 0; i < movies.length; i++) {
+        if (
+            movies[i].title.toLowerCase() === title.toLowerCase() &&
+            movies[i].year == year
+        ){
+            existingMovie = movies[i];
+        }
+    }
+
+    if(existingMovie){
+        // NEW: update rating by averaging
+        existingMovie.total += rating;
+        existingMovie.count += 1;
+        existingMovie.rating = Math.ceil(existingMovie.total / existingMovie.count);
+    }
+    else{
+        const movie = {
+            title: title,
+            year: year,
+            genre: genre,
+            rating: rating,
+            total: rating,
+            count: 1
+        };
+
+        movies.push(movie);
+    }
 
     saveMovies(movies);
     displayMovies();
@@ -243,9 +285,9 @@ document.getElementById("myForm").addEventListener("submit", function(e){
 
 displayMovies();
 
+/* IMPORTANT: make delete function accessible to HTML */
+window.deleteMovie = deleteMovie;
+
 });
 
 </script>
-
-</body>
-</html>
