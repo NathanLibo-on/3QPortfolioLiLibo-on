@@ -20,8 +20,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="author" content="<your names>" />
-  <meta name="revised" content="<date today>" />
+  <meta name="author" content="<Nathan Allen Libo-on>" />
+  <meta name="revised" content="<March 26, 2026>" />
   <style>
     body { font-family: Arial, sans-serif; }
     .header, .footer {
@@ -30,17 +30,29 @@
     }
     .footer {
        opacity: 0.5;
+       position: fixed; bottom: 0; width: 100%;
     }
     .sidebar {
       background: lightgreen;
       width: 150px;
       height: 200px;
+      position: relative; bottom: 0px; right: 0px;
     }
     .content {
       background: lightyellow;
       width: 300px;
       height: 200px;
+      position: absolute; top: 66px; left: 200px;
+      z-index: 1;
     }    
+    .notice {
+    position: absolute;
+    top: 66px;
+    left: 430px;
+    background: orange;
+    padding: 10px;
+    z-index: 2;
+}
   </style>
 </head>
 <body>
@@ -48,6 +60,7 @@
   <div class="sidebar">Sidebar</div>
   <div class="content">Main Content</div>
   <div class="footer">Footer</div>
+  <div class="notice">Notice!</div>
 </body>
 </html>
 ```
@@ -56,18 +69,21 @@
 - Add in css ```position: relative; top: 20px; left: 20px;``` to .sidebar.
 
 - Guided Question: What changed compared to the default static positioning? Try to give different values to top and left or you can change it to bottom, right.
+      - It moved the sidebar what ever amount of pixels and to the opposite of whatever direction you assign it to relative to its normal position in the html. For example, if we put top: 20 px, it will will move down 20 px from its normal position.
 
 ### Step 2 (Fixed):
 
 - Add in css ```position: fixed; bottom: 0; width: 100%;``` to .footer.
 
 - Guided Question: What happens when you scroll the page? Why does the footer behave differently from position relative?
+      - Compared to position relative wherein its position is relative to its original position, position fixed fixes the footer onto the browser viewport itself. So, in the given code, the footer is fixed to the bottom of the page all the time even when you scroll. If we add say bottom: 50 px, the footer stays fixed 50 px above the bottom of the page even when you scroll.
 
 ### Step 3 (Absolute):
 
 - Add in css ```position: absolute; top: 66px; left: 200px;``` to .content.
 
 - Guided Question: What is the effect of position: absolute on an element? How is it different from fixed?
+      - Position absolute changes the position of the object inside its container. It doesn't affect other objects inside the same container, it just overlaps them and assumes its position there. It is different from position fixed because position fixed is in relation to the viewport of the browser, while position absolute changes position in relation to the cotainer it is inside of.
 
 ### Step 4 : (Absolute)
 
@@ -87,11 +103,15 @@
 - Give .content a z-index: 1.
 
 - Guided Question: Why does the notice appear on top of the content? What happens if you swap the z‑index values?
+      - This is because the z-index of .notice is higher than .content, meaning it should appear above .content. If we swap the values, .content would appear above .notice.
 
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
     * Try to change the position of .content to relative then to fixed. What do you observed each time?
+      - When changed to relative, then it moved relative to the position it has when no position values were inputed.
+      - When changed to fixed, it fixed .content to that position in the viewport of the browser, meaning that even if you scroll .content will still be in the same position of your browser.
     * What do you observe on about the effect of z-index on .notice and .content boxes?
+      - It changes the hierarchy of which object should appear on top of another. The higher the value, the more important it will be and will appear on top of everthing else.
 
 3. Please answer the following reflection questions (15 minutes)
 
