@@ -51,39 +51,26 @@
             cursor:pointer;
         }
 
-        button:hover{
-            background:#155ab0;
-        }
-
-        .stars{
-            margin-top:10px;
-        }
-
-        .star{
-            font-size:28px;
-            cursor:pointer;
-            color:#ccc;
-        }
-
-        .star.active{
-            color:gold;
-        }
-
-        .movie{
-            background:#e8e8e8;
-            padding:12px;
-            margin-top:12px;
-            border-radius:6px;
-            border:1px solid #ccc;
-        }
-
-        .rating-stars{
-            color:gold;
-        }
-
-        nav{
-            text-align:center;
-            margin-top:20px;
+        .custom-checkbox {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 2px solid #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(
+                50% 0%,
+                61% 35%,
+                98% 35%,
+                68% 57%,
+                79% 91%,
+                50% 70%,
+                21% 91%,
+                32% 57%,
+                2% 35%,
+                39% 35%
+            );
         }
 
     </style>
@@ -144,106 +131,6 @@
 <nav>
     <a href="../index.html">Back to Portfolio</a>
 </nav>
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function(){
-
-var rating = 0;
-var stars = document.querySelectorAll(".star");
-
-for (var i = 0; i < stars.length; i++) {
-    stars[i].addEventListener("click", setRating);
-}
-
-function setRating(event){
-    var clickedStar = event.target;
-    for (var i = 0; i < stars.length; i++) {
-        if (stars[i] === clickedStar) {
-            rating = i + 1;
-        }
-    }
-    updateStars();
-}
-
-
-function updateStars(){
-    for (var i = 0; i < stars.length; i++) {
-        if (i < rating) {
-            stars[i].classList.add("active");
-        }
-        else{
-            stars[i].classList.remove("active");
-        }
-    }
-}
-
-function getMovies(){
-    var movies = localStorage.getItem("movies");
-    if (movies != null){
-        movies = JSON.parse(movies);
-        return movies;
-    }
-    else{
-        return [];
-    }
-}
-
-function saveMovies(movies){
-    localStorage.setItem("movies", JSON.stringify(movies));
-}
-
-function displayMovies(){
-
-    const movieList = document.getElementById("movieList");
-    movieList.innerHTML = "";
-
-    const movies = getMovies();
-
-    movies.forEach(movie => {
-
-        let starsDisplay = "★".repeat(movie.rating);
-
-        const div = document.createElement("div");
-        div.classList.add("movie");
-
-        div.innerHTML =
-        `${movie.title} (${movie.year}) - ${movie.genre}, Rating: <span class="rating-stars">${starsDisplay}</span>`;
-
-        movieList.appendChild(div);
-
-    });
-}
-
-document.getElementById("myForm").addEventListener("submit", function(e){
-
-    e.preventDefault();
-
-    const movie = {
-        title: document.getElementById("title").value,
-        year: document.getElementById("year").value,
-        genre: document.getElementById("movie_genre").value,
-        rating: rating
-    };
-
-    const movies = getMovies();
-    movies.push(movie);
-
-    saveMovies(movies);
-    displayMovies();
-
-    this.reset();
-
-    rating = 0;
-    stars.forEach(s => s.classList.remove("active"));
-
-});
-
-displayMovies();
-
-});
-
-</script>
 
 </body>
 </html>
